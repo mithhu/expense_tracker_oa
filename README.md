@@ -6,7 +6,7 @@
 npm install
 ```
 
-## If VS Code shows TypeScript Error
+## If IDE shows TypeScript Error
 
 ```
 Select latest version of TypeScript in the IDE
