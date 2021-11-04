@@ -63,7 +63,7 @@ export function useExpenseTracker(): [
 
   function addTransactionAction(text: string, amount: number) {
     dispatch({
-      type: "SET_TRACKER_COUNT",
+      type: SET_TRACKER_COUNT,
       payload: {
         text,
         amount,
