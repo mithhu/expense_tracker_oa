@@ -19,7 +19,7 @@ test("Testing length of transactions and checking if every text and amount is ad
   const textEl = component.getAllByTestId("text");
   const amountEl = component.getAllByTestId("amount");
 
-  //transaction text --
+  //transaction text
   [...textEl].every((el) =>
     histories.map((history) => history.text).includes(el.textContent + "")
   );

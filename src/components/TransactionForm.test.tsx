@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import TransactionForm from "./TransactionForm";
 
-test("checking if the functions is getting called with correct input", async () => {
+test("checking if the submit function is getting called with correct input", async () => {
   const handleSubmit = jest.fn();
 
   const component = render(

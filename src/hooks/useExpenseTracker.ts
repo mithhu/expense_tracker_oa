@@ -1,5 +1,5 @@
-import React from "react";
-import { IhistoryProps, ItrackerState } from "../interface";
+import { useReducer } from "react";
+import { IaddTransactionFn, ItrackerState } from "../interface";
 
 const initialValue = {
   income: 0,
@@ -7,6 +7,9 @@ const initialValue = {
   totalAmount: 0,
   histories: [],
 };
+
+const SET_AMOUNT = "SET_AMOUNT";
+const SET_TRACKER_COUNT = "SET_TRACKER_COUNT";
 
 function trackerReducer(
   state: ItrackerState,
@@ -18,10 +21,10 @@ function trackerReducer(
       }
 ) {
   switch (action.type) {
-    case "SET_AMOUNT": {
+    case SET_AMOUNT: {
       return { ...state, totalAmount: action.payload };
     }
-    case "SET_TRACKER_COUNT": {
+    case SET_TRACKER_COUNT: {
       const previousState = { ...state };
       //income when amount is positive
       previousState.income +=
@@ -30,7 +33,7 @@ function trackerReducer(
       //expense when amount is negative
       previousState.expense -=
         action.payload.amount < 0 ? Number(action.payload.amount) : 0;
-      //neagtive and negative makes positive. ex. 0 - (-100) = 100;
+      //negative and negative makes positive. ex. 0 - (-100) = 100;
 
       previousState.totalAmount += Number(action.payload.amount);
 
@@ -41,9 +44,6 @@ function trackerReducer(
           text: action.payload.text,
         },
       ];
-
-      console.log(previousState);
-
       return previousState;
     }
 
@@ -54,17 +54,12 @@ function trackerReducer(
 }
 
 export function useExpenseTracker(): [
-  state: {
-    income: number;
-    expense: number;
-    totalAmount: number;
-    histories: IhistoryProps[];
-  },
+  state: ItrackerState,
   action: {
-    addTransactionAction: (txet: string, amount: number) => void;
+    addTransactionAction: IaddTransactionFn;
   }
 ] {
-  const [state, dispatch] = React.useReducer(trackerReducer, initialValue);
+  const [state, dispatch] = useReducer(trackerReducer, initialValue);
 
   function addTransactionAction(text: string, amount: number) {
     dispatch({
@@ -79,9 +74,9 @@ export function useExpenseTracker(): [
   return [
     {
       income: state.income,
+      expense: state.expense,
       totalAmount: state.totalAmount,
       histories: state.histories,
-      expense: state.expense,
     },
     { addTransactionAction },
   ];

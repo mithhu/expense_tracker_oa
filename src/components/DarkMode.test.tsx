@@ -7,8 +7,10 @@ test("Testing dark mode button's action", () => {
   const container = document.documentElement.classList;
 
   expect(container.contains("dark")).toBe(false); //initially no dark class
+
   fireEvent.click(themeBtnEl); // 1st click to make it dark
   expect(container.contains("dark")).toBe(true);
+
   fireEvent.click(themeBtnEl); //2nd click to make it light
   expect(container.contains("dark")).toBe(false);
 });

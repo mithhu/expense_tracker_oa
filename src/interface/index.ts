@@ -10,10 +10,14 @@ export interface ItrackerState {
   histories: IhistoryProps[];
 }
 
+export interface IaddTransactionFn {
+  (text: string, amount: number): void;
+}
+
 export interface IFormProps {
   income: number;
   expense: number;
-  addTransactionAction: (text: string, amount: number) => void;
+  addTransactionAction: IaddTransactionFn;
 }
 
 export interface Ierror {
