@@ -20,7 +20,9 @@ export function History({ histories }: { histories: IhistoryProps[] }) {
                   {item.text}
                 </p>
                 <p data-testid={"amount"}>
-                  {item.amount > 0 ? `+${item.amount}` : item.amount}
+                  {item.amount > 0
+                    ? `+$${item.amount}`
+                    : `-$${Math.abs(item.amount)}`}
                 </p>
               </div>
             </li>
