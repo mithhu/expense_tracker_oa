@@ -20,30 +20,22 @@ export default function TransactionForm({
           errors.amount = "Amount required";
         } else if (Number(values.amount) === 0) {
           errors.amount = "Amount can not be 0";
-        } else if (
-          Number(values.amount) < 0 &&
-          income < Math.abs(Number(values.amount)) + expense
-        ) {
-          errors.amount = "Expenses can't be greater than balance";
         }
-
         return errors;
       }}
       onSubmit={(values, { resetForm }) => {
+        if (
+          Number(values.amount) < 0 &&
+          income < Math.abs(Number(values.amount)) + expense
+        ) {
+          alert("Expenses can't be greater than balance");
+          return;
+        }
         addTransactionAction(values.text, Number(values.amount));
         resetForm({});
       }}
     >
-      {(formikBag) => {
-        const amountErrorCheck = () => {
-          return (
-            (Number(formikBag.values.amount) < 0 &&
-              income < Math.abs(Number(formikBag.values.amount)) + expense) ||
-            Boolean(formikBag.errors.amount?.length) ||
-            Boolean(formikBag.errors.text?.length)
-          );
-        };
-
+      {() => {
         return (
           <Form>
             <h3 className="font-semibold mb-4 mt-6 border-b-2 border-gray-300 dark:text-white">
@@ -90,14 +82,7 @@ export default function TransactionForm({
               data-testid={"submit-btn"}
               type="submit"
               name="Add Transaction"
-              disabled={amountErrorCheck()}
-              className={`block w-full p-3 mt-6 text-sm text-white rounded shadow dark:bg-gray-700
-             ${
-               amountErrorCheck()
-                 ? "cursor-not-allowed bg-indigo-200 dark:text-gray-500"
-                 : "bg-indigo-400"
-             }
-              `}
+              className="block w-full p-3 mt-6 text-sm text-white rounded shadow dark:bg-gray-700 bg-indigo-400"
             >
               Add transaction
             </button>
