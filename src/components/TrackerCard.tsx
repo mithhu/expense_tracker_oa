@@ -3,9 +3,9 @@ import { ItrackerState } from "../interface";
 function TrackerCard({ state }: { state: ItrackerState }) {
   return (
     <>
-      <h3 className="uppercase font-semibold">your balance</h3>
+      <h3 className="uppercase font-semibold text-sm">your balance</h3>
       <p className="text-3xl" data-testid={"total"}>
-        ${state.totalAmount}
+        ${state.totalAmount.toFixed(2)}
       </p>
       <div className="flex bg-white dark:bg-gray-700 rounded shadow-md p-4 mt-4">
         <div className="flex-1">
